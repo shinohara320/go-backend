@@ -5,7 +5,7 @@ import (
 	"github.com/shinohara320/travel-agent/util"
 )
 
-func isAuthenticate(c *fiber.Ctx) error {
+func IsAuthenticate(c *fiber.Ctx) error {
 	cookie := c.Cookies("jwt")
 
 	if _, err := util.ParseJwt(cookie); err != nil {
