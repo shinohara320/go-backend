@@ -6,5 +6,5 @@ type Blog struct {
 	Desc   string `json:"desc"`
 	Image  string `json:"image"`
 	UserID string `json:"userid"`
-	User   User   `json:"user" gorm:"foreignkey:UserID"`
+	User   User   `json:"user" gorm:"foreignKey:UserID"`
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/shinohara320/travel-agent/database"
 	"github.com/shinohara320/travel-agent/models"
+	"github.com/shinohara320/travel-agent/util"
 )
 
 func CreatePost(c *fiber.Ctx) error {
@@ -51,5 +52,38 @@ func DetailPost(c *fiber.Ctx) error {
 	database.DB.Where("id=?", id).Preload("User").First(&blogpost)
 	return c.JSON(fiber.Map{
 		"data": blogpost,
+	})
+}
+
+func UpdatePost(c *fiber.Ctx) error {
+	id, _ := strconv.Atoi(c.Params("id"))
+	blog := models.Blog{
+		Id: uint(id),
+	}
+	if err := c.BodyParser(&blog); err != nil {
+		fmt.Println("Unable to parse body")
+	}
+	database.DB.Model(&blog).Updates(blog)
+	return c.JSON(fiber.Map{
+		"message": "post has been updated successfully",
+	})
+}
+
+func UniquePost(c *fiber.Ctx) error {
+	cookie := c.Cookies("jwt")
+	Id, err := util.ParseJwt(cookie)
+	if err != nil {
+		return c.Status(401).JSON(fiber.Map{
+			"message": "Unauthorized",
+		})
+	}
+
+	var blog []models.Blog
+	database.DB.Model(&blog).Where("user_id = ?", Id).Preload("User").Find(&blog)
+
+	return c.JSON(fiber.Map{
+		"userId": Id,
+		"blogs":  blog,
+		"token":  cookie,
 	})
 }
