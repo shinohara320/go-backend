@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"errors"
 	"fmt"
 	"math"
 	"strconv"
@@ -9,6 +10,7 @@ import (
 	"github.com/shinohara320/travel-agent/database"
 	"github.com/shinohara320/travel-agent/models"
 	"github.com/shinohara320/travel-agent/util"
+	"gorm.io/gorm"
 )
 
 func CreatePost(c *fiber.Ctx) error {
@@ -86,4 +88,22 @@ func UniquePost(c *fiber.Ctx) error {
 		"blogs":  blog,
 		"token":  cookie,
 	})
+}
+
+func DeletePost(c *fiber.Ctx) error {
+	id, _ := strconv.Atoi(c.Params("id"))
+	blog := models.Blog{
+		Id: uint(id),
+	}
+	deleteQuery := database.DB.Delete(&blog)
+	if errors.Is(deleteQuery.Error, gorm.ErrRecordNotFound) {
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"message": "Opps!, Record not found",
+		})
+	}
+	return c.JSON(fiber.Map{
+		"message": "post deleted successfully",
+	})
+
 }
