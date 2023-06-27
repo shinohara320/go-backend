@@ -1,5 +1,6 @@
 module github.com/shinohara320/travel-agent
 
+// +heroku goVersion 1.20
 go 1.20
 
 require (
