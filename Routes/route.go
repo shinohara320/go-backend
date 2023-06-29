@@ -7,7 +7,7 @@ import (
 )
 
 func Setup(app *fiber.App) {
-	app.Use(middleware.CorsMiddleware)
+	app.Use(middleware.CorsMiddleware())
 	app.Post("/api/register", controller.Register)
 	app.Post("/api/login", controller.Login)
 
