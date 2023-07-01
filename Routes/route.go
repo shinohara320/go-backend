@@ -11,7 +11,7 @@ func Setup(app *fiber.App) {
 	app.Post("/api/register", controller.Register)
 	app.Post("/api/login", controller.Login)
 
-	app.Use(middleware.IsAuthenticate)
+	// app.Use(middleware.IsAuthenticate)
 	app.Post("/api/post", controller.CreatePost)
 	app.Get("/api/allpost", controller.AllPost)
 	app.Get("/api/allpost/:id", controller.DetailPost)
