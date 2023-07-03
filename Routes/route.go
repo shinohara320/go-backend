@@ -10,6 +10,7 @@ func Setup(app *fiber.App) {
 	app.Use(middleware.CorsMiddleware())
 	app.Post("/api/register", controller.Register)
 	app.Post("/api/login", controller.Login)
+	app.Post("/api/testimonials", controller.PostTestimonials)
 
 	// app.Use(middleware.IsAuthenticate)
 	app.Post("/api/post", controller.CreatePost)
