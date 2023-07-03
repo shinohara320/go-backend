@@ -23,3 +23,14 @@ func PostTestimonials(c *fiber.Ctx) error {
 		"message": "Congratulations, your message posted",
 	})
 }
+
+func GetTestimonials(c *fiber.Ctx) error {
+	var testimonials []models.Testimonials
+	if err := database.DB.Find(&testimonials).Error; err != nil {
+		c.Status(500)
+		return c.JSON(fiber.Map{
+			"message": "Internal Server Error",
+		})
+	}
+	return c.JSON(testimonials)
+}
