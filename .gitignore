@@ -1,0 +1,8 @@
+.env
+
+cert/*.pem
+
+upload/
+build/
+
+!upload/*
