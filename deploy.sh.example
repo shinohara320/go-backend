@@ -1,0 +1,13 @@
+echo "switching to <default/production> branch"
+git checkout <default/production>
+
+echo "Building app..."
+goos=<os> goarch=<architecture> go build -o build/<build-name>
+
+echo "Deploying files to server"
+
+scp <build-name> <uname>@<address>: /<path>/<directory>
+
+echo "Done!"
+
+#change <> to your own system/env/file
