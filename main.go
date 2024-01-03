@@ -17,18 +17,8 @@ func main() {
 		log.Fatal("Error loading .env files")
 	}
 	port := os.Getenv("PORT")
-	certFile := os.Getenv("CERT_FILE") // Path to your cert.pem
-	keyFile := os.Getenv("KEY_FILE")   // Path to your key.pem
-
-	app := fiber.New(fiber.Config{
-		Prefork: true,
-	})
-
-	// Enable HTTPS
-	err = app.ListenTLS(":"+port, certFile, keyFile)
-	if err != nil {
-		log.Fatalf("Error starting server: %v", err)
-	}
-
+	app := fiber.New()
 	routes.Setup(app)
+	app.Listen(":" + port)
+
 }

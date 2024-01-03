@@ -59,7 +59,7 @@ func CreatePost(c *fiber.Ctx) error {
 
 func AllPost(c *fiber.Ctx) error {
 	page, _ := strconv.Atoi(c.Query("page", "1"))
-	limit := 6
+	limit := 12
 	offset := (page - 1) * limit
 	var total int64
 	var getblog []models.Blog
@@ -175,7 +175,7 @@ func GetLatestBlogs(c *fiber.Ctx) error {
 	err := database.DB.Order("id desc").Offset(offset).Limit(limit).Find(&latestBlogs).Error
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Gagal mengambil daftar berita terbaru",
+			"message": "Gagal mengambil daftar berita terbaru, coba refresh halaman",
 		})
 	}
 

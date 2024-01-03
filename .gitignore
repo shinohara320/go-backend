@@ -2,6 +2,8 @@
 
 cert/*.pem
 
+deploy.sh
+
 upload/
 build/
 
